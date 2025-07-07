@@ -5,6 +5,17 @@
 
 int cpt = 0;
 
+// Function declarations
+void    ft_putchar(char c);
+void    print_board(int board[SIZE][SIZE]);
+void    print_tiret(int i);
+void    create_mask_board(int board[][SIZE], int mask_board[][SIZE]);
+int     is_fix(int mask_board[][SIZE], int line, int index);
+int     is_constraint(int board[][SIZE], int line, int index);
+void    change_line(int *line, int *index);
+int     solveur(int board[][SIZE], int mask_board[][SIZE], int line, int index);
+void    print_debug(int board[][SIZE], int mask_board[][SIZE], int line, int index);
+
 void    ft_putchar(char c)
 {
     write(1, &c, 1);
@@ -175,40 +186,37 @@ int solveur(int board[][SIZE], int mask_board[][SIZE], int line, int index)
         return 1;
 
     change_line(&line, &index);
-    while (is_fix(mask_board, line, index))
+    while (line < SIZE && is_fix(mask_board, line, index))
     {
         index++;
         change_line(&line, &index);
     }
+
+    if (line >= SIZE)
+        return 1;
 
     if (board[line][index] == 0)
         board[line][index] = 1;
 
     int value;
 
-    while (line < SIZE)
+    value = 1;
+    while (value <= SIZE)
     {
-        value = 1;
-        while (value <= SIZE)
+        if (!is_constraint(board, line, index))
         {
-            if (!is_constraint(board, line, index))
-            {
-                //print_debug(board, mask_board, line, index);
-                //if (line == 0 && index == 7 && board[line][index] == 9)
-                    //ft_putchar('o');
-                if (solveur(board, mask_board, line, index + 1))
-                    return 1;
-                else
-                    board[line][index] += 1;
-            }
+            if (solveur(board, mask_board, line, index + 1))
+                return 1;
             else
                 board[line][index] += 1;
-            value++;
-            cpt++;
         }
-        board[line][index] = 0;
-        return 0;
+        else
+            board[line][index] += 1;
+        value++;
+        cpt++;
     }
+    board[line][index] = 0;
+    return 0;
 }
 
 int main(void)
