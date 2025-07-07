@@ -260,7 +260,7 @@ Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 
 ## 👨‍💻 Auteur
 
-**blax** - [blax@student.42.fr](mailto:blax@student.42.fr)
+**Etienne** - [edesaint@student.42.fr](mailto:edesaint@student.42.fr)
 
 ---
 
